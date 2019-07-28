@@ -1,16 +1,16 @@
-defmodule  Cqrs.Projectors.Survival do
+defmodule  Cqrs.Projectors.Other do
   use Commanded.Projections.Ecto,
-    name: "Projectors.Survival",
+    name: "Projectors.Other",
     consistency: :strong
 
   alias Cqrs.Events.MoneyExpent
-  alias Cqrs.Projections.Survival
+  alias Cqrs.Projections.Other
 
-  project(%MoneyExpent{category: "survival"} = expent, fn multi -> insertMovement(multi, expent) end)
+  project(%MoneyExpent{category: "other"} = expent, fn multi -> insertMovement(multi, expent) end)
 
   defp insertMovement(multi, movement) do
     date = DateTime.truncate(DateTime.utc_now, :second)
-    Ecto.Multi.insert(multi, :survival, %Survival{
+    Ecto.Multi.insert(multi, :survival, %Other{
       account: movement.account,
       amount: movement.amount,
       concept: movement.concept,
