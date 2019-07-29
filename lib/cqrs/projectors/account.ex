@@ -6,15 +6,15 @@ defmodule  Cqrs.Projectors.Account do
   alias Cqrs.Events.{MoneyAdded, MoneyExpent}
   alias Cqrs.Projections.Account
 
-  project(%MoneyAdded{} = added, fn multi -> insertMovement(multi, added, "") end)
-  project(%MoneyExpent{} = expent, fn multi -> insertMovement(multi, expent, expent.category) end)
+  project(%MoneyAdded{} = added, fn multi -> insertMovement(multi, added.account, added.amount, added.concept, "") end)
+  project(%MoneyExpent{} = expent, fn multi -> insertMovement(multi, expent.account, -expent.amount, expent.concept, expent.category) end)
 
-  defp insertMovement(multi, movement, category) do
+  defp insertMovement(multi, account, amount, concept, category) do
     date = DateTime.truncate(DateTime.utc_now, :second)
     Ecto.Multi.insert(multi, :account, %Account{
-      account: movement.account,
-      amount: movement.amount,
-      concept: movement.concept,
+      account: account,
+      amount: amount,
+      concept: concept,
       category: category,
       inserted_at: date,
       updated_at: date

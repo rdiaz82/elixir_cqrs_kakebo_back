@@ -1,10 +1,10 @@
 
-defmodule Cqrs.Queries.GetMovements do
+defmodule Cqrs.Queries.Account do
   import Ecto.Query
 
   alias Cqrs.Projections.Account
 
-  def new(account) do
+  def getMovementsFromAccount(account) do
     from u in Account,
     where: u.account == ^account
   end
