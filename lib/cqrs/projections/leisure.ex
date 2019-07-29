@@ -1,6 +1,7 @@
 defmodule Cqrs.Projections.Leisure do
   use Ecto.Schema
-@primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Jason.Encoder, except: [:__meta__, :updated_at]}
+  @primary_key {:id, :binary_id, autogenerate: true}
 
   schema "leisure_movement" do
     field :account, :integer

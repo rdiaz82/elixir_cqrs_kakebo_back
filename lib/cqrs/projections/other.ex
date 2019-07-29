@@ -1,5 +1,6 @@
 defmodule Cqrs.Projections.Other do
   use Ecto.Schema
+@derive {Jason.Encoder, except: [:__meta__, :updated_at]}
 @primary_key {:id, :binary_id, autogenerate: true}
 
   schema "other_movement" do
